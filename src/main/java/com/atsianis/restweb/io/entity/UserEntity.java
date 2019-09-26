@@ -3,24 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.atsianis.restweb.shared.dto;
+package com.atsianis.restweb.io.entity;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  *
  * @author samsung np350
  */
-public class UserDto implements Serializable {
+@Entity(name="users")
+public class UserEntity implements Serializable {
     
-    private static final long serialVersionUID = 4548468415388713588L;
+    private static final long serialVersionUID = 5313493413859894403L;
+    @Id
+    @GeneratedValue
     private long id;
+    
+    @Column(nullable=false, length=50)
     private String userId;
+    
+    @Column(nullable=false, length=50)
+    private String lastName;
+    
+    @Column(nullable=false, length=50)
     private String firstName;
+    
+    @Column(nullable=false, length=120)
     private String email;
-    private String password; 
+    
+    @Column(nullable=false)
     private String encryptedPassword;
+    
     private String emailVerificationToken;
+    
+    @Column(nullable=false)
     private boolean emailVerificationStatus = false;
 
     public long getId() {
@@ -39,6 +62,14 @@ public class UserDto implements Serializable {
         this.userId = userId;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -53,14 +84,6 @@ public class UserDto implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEncryptedPassword() {
@@ -79,7 +102,7 @@ public class UserDto implements Serializable {
         this.emailVerificationToken = emailVerificationToken;
     }
 
-    public boolean getEmailVerificationStatus() {
+    public boolean isEmailVerificationStatus() {
         return emailVerificationStatus;
     }
 

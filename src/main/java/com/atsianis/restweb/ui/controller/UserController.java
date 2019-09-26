@@ -5,8 +5,12 @@
  */
 package com.atsianis.restweb.ui.controller;
 
+import com.atsianis.restweb.service.UserService;
 import com.atsianis.restweb.ui.model.request.UserDetailsRequestModel;
 import com.atsianis.restweb.ui.model.response.UserRest;
+import com.atsianis.restweb.shared.dto.UserDto;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users") // https://localhost:8080/users
 public class UserController {
     
+    @Autowired
+    UserService userService;
+    
     @GetMapping
     public String getUser(){
         return "get user was called";
@@ -31,7 +38,15 @@ public class UserController {
     
     @PostMapping
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails){
-        return null;
+        UserRest returnValue = new UserRest();
+        
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(userDetails,userDto);
+        
+        UserDto createdUser = userService.createUser(userDto);
+        BeanUtils.copyProperties(createdUser,returnValue);
+        
+        return returnValue;
     }
     
     @PutMapping
